@@ -1,12 +1,16 @@
 {
   "name": "quickvault",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Ultra-fast bookmark & notes overlay — Ctrl+Shift+Space from anywhere",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
     "build": "electron-builder --win",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac",
+    "build:all": "electron-builder --win --linux --mac",
     "postinstall": "electron-builder install-app-deps"
   },
   "keywords": ["bookmarks", "notes", "overlay", "hotkey", "productivity", "electron"],
@@ -26,6 +30,17 @@
       "icon": "assets/icon.png",
       "signAndEditExecutable": false
     },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "assets/icon.png",
+      "category": "Utility",
+      "artifactName": "QuickVault-${version}-${arch}.${ext}"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "assets/icon.png",
+      "category": "public.app-category.productivity"
+    },
     "portable": { "artifactName": "QuickVault-Portable.exe" },
     "forceCodeSigning": false,
     "electronLanguages": ["en-US"],
@@ -44,7 +59,6 @@
   "dependencies": {
     "@electron/rebuild": "^4.0.1",
     "better-sqlite3": "^11.9.1",
-    "fuse.js": "^7.1.0",
     "uuid": "^11.1.0"
   }
 }

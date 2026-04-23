@@ -1,215 +1,176 @@
 <p align="center">
-  <img src="assets/icon.png" width="80" alt="QuickVault Icon"/>
+  <img src="assets/icon.png" alt="QuickVault Logo" width="80" />
 </p>
 
 <h1 align="center">QuickVault</h1>
 
 <p align="center">
-  <strong>Ultra-fast bookmark & notes overlay for your PC</strong><br>
-  <em>Press <code>Ctrl+Shift+Space</code> anywhere — save links and notes in under 3 seconds</em>
+  <strong>Ultra-fast bookmark & notes overlay for your desktop</strong><br/>
+  Press <code>Ctrl+Shift+Space</code> from anywhere to instantly save links, jot notes, and stay organized.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2.0.0-8b5cf6?style=flat-square" alt="Version"/>
-  <img src="https://img.shields.io/badge/platform-Windows-0078D6?style=flat-square&logo=windows" alt="Windows"/>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
-  <img src="https://img.shields.io/badge/electron-35-47848F?style=flat-square&logo=electron" alt="Electron"/>
-  <img src="https://img.shields.io/badge/storage-SQLite-003B57?style=flat-square&logo=sqlite" alt="SQLite"/>
+  <img src="https://img.shields.io/badge/version-2.1.0-8b5cf6?style=flat-square" alt="Version" />
+  <img src="https://img.shields.io/badge/electron-35-blue?style=flat-square" alt="Electron" />
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform" />
 </p>
 
 ---
 
-## ✨ What is QuickVault?
+## ✨ Features
 
-QuickVault is a **keyboard-first, floating overlay** that lets you instantly save bookmarks and notes from **anywhere on your PC** — without switching apps, opening browsers, or losing focus.
-
-**The problem:** You find a useful link or have a quick thought. You open a note app, wait for it to load, navigate to the right page, type, and save. By the time you're done, 30 seconds have passed and you've lost your flow.
-
-**QuickVault's answer:** Press 3 keys → type → Enter. Done. **~3 seconds.** Then it disappears.
+| Feature | Description |
+|---|---|
+| 🚀 **Instant Access** | Global hotkey `Ctrl+Shift+Space` — opens an overlay from any app |
+| 🔗 **Smart Links** | Paste a URL and QuickVault auto-fetches the page title |
+| 📝 **Quick Notes** | Type anything to save a note — multi-line with `Shift+Enter` |
+| 🔍 **Full-Text Search** | FTS5-powered search finds items instantly as you type |
+| 🏷️ **Tags** | Use `#tags` inline to organize — filter by tag with one click |
+| 📌 **Pinning** | Pin important items to the top |
+| 🔒 **Encryption** | AES-256-GCM encryption for sensitive notes |
+| 📊 **Dashboard** | Stats overview — total items, top tags, most visited links |
+| 📤 **Export** | Export to Markdown, JSON, or HTML |
+| 🌙 **Themes** | Dark and light mode with smooth transitions |
+| ⌨️ **Keyboard-first** | Arrow keys to navigate, Enter to open, Delete to remove |
 
 ---
 
-## 🚀 Features
+## 📸 Quick Look
 
-### Core
-| Feature | Description |
-|---|---|
-| ⌨️ **Global Hotkey** | `Ctrl+Shift+Space` works from anywhere — browser, VS Code, games, fullscreen apps |
-| ⚡ **Instant Capture** | Paste a URL → auto-fetches title. Type text → saved as note |
-| 🔍 **Fuzzy Search** | Smart search powered by Fuse.js across all your items |
-| 🏷️ **Tags** | Add `#work`, `#research`, `#personal` inline — auto-extracted |
-| 📌 **Pin to Top** | Pin frequently used items for instant access |
-| ✏️ **Edit Notes** | Click edit button to modify any saved item |
-| ↩️ **Undo Delete** | 5-second undo toast after deleting an item |
-
-### Organization & Views
-| Feature | Description |
-|---|---|
-| 📊 **Dashboard** | Stats overview — item counts, top tags, most visited links, recent items |
-| 🌙 **Dark / Light Mode** | Toggle themes with one click, persisted across sessions |
-| 📐 **Compact / Expanded** | Switch between detailed and minimal card views |
-
-### Security & Data
-| Feature | Description |
-|---|---|
-| 🔒 **AES-256 Encryption** | Encrypt sensitive notes with a password (never stored on disk) |
-| 💾 **100% Offline** | SQLite database — your data never leaves your machine |
-| 📤 **Export** | Markdown, JSON, or HTML — your data, your format |
-
-### Quality of Life
-| Feature | Description |
-|---|---|
-| 📝 **Multi-line Notes** | `Shift+Enter` for new lines in the input |
-| 🖥️ **Multi-Monitor** | Opens on the monitor where your cursor is |
-| 🔔 **Hotkey Conflict Alert** | Notifies you if another app already uses the shortcut |
-| 🔄 **Auto-Start** | Starts with Windows when installed (packaged builds) |
+1. **Press `Ctrl+Shift+Space`** — the overlay appears
+2. **Paste a link** — it's saved instantly with the page title auto-fetched
+3. **Type a note** — press Enter to save, use `#tags` to organize
+4. **Search** — just start typing to find anything
+5. **Press `Esc`** — the overlay hides, your workflow continues
 
 ---
 
-## 📸 Screenshots
-
-<table>
-<tr>
-<td align="center"><strong>Dark Mode</strong></td>
-<td align="center"><strong>Light Mode</strong></td>
-</tr>
-<tr>
-<td><img src="assets/screenshot-dark.png" width="300"/></td>
-<td><img src="assets/screenshot-light.png" width="300"/></td>
-</tr>
-</table>
-
----
-
-## ⚡ Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) v18+ installed
-- Windows 10/11
+
+- [Node.js](https://nodejs.org/) v18 or later
+- [Git](https://git-scm.com/)
 
 ### Install & Run
 
 ```bash
-# Clone the repo
-git clone https://github.com/YOUR_USERNAME/quickvault.git
+# Clone the repository
+git clone https://github.com/blowmuffin/quickvault.git
 cd quickvault
 
 # Install dependencies
 npm install
 
-# Rebuild native modules for Electron
-npx electron-rebuild
-
-# Launch the app
+# Run in development mode
 npm start
 ```
 
-### Build Portable .exe
+### Build Portable Executable
 
 ```bash
-npm run build
-# Output: dist/QuickVault-Portable.exe
+# Windows
+npm run build:win
+
+# macOS
+npm run build:mac
+
+# Linux
+npm run build:linux
+
+# All platforms
+npm run build:all
 ```
+
+The portable `.exe` (Windows) will be at `dist/QuickVault-Portable.exe`.
 
 ---
 
 ## ⌨️ Keyboard Shortcuts
 
-| Key | Action |
+| Shortcut | Action |
 |---|---|
-| `Ctrl+Shift+Space` | Toggle overlay from anywhere |
-| `Enter` | Save current input |
-| `Shift+Enter` | New line in note |
-| `Esc` | Hide overlay / close modals |
-| `↑` / `↓` | Navigate between items |
-| `Tab` | Move between UI elements |
+| `Ctrl+Shift+Space` | Toggle QuickVault overlay |
+| `Enter` | Save new item / Open selected link |
+| `Shift+Enter` | New line in input |
+| `Esc` | Hide overlay / Close modal |
+| `↑` `↓` | Navigate items |
+| `Delete` | Delete selected item |
 
 ---
 
-## 🗂️ Project Structure
+## 🏗️ Architecture
 
 ```
 quickvault/
 ├── src/
-│   ├── main.js          # Electron main process — window, tray, hotkey, IPC
-│   ├── database.js      # SQLite layer — CRUD, encryption, export, stats
-│   ├── preload.js       # Secure IPC bridge (contextIsolation)
+│   ├── main.js          # Electron main process — window, tray, IPC, security
+│   ├── preload.js       # Context bridge — safe API exposed to renderer
+│   ├── database.js      # SQLite (better-sqlite3) — FTS5, migrations, encryption
 │   └── renderer/
 │       ├── index.html   # UI markup
-│       ├── app.js       # All frontend logic
-│       └── styles.css   # Dark/light themes, glassmorphism
+│       ├── app.js       # Renderer logic — all interactions via window.vault API
+│       └── styles.css   # Theming, animations, responsive design
 ├── assets/
 │   └── icon.png         # App icon
 ├── package.json
-├── LICENSE
-└── README.md
+└── LICENSE
 ```
 
----
+### Key Design Decisions
 
-## 🛠️ Tech Stack
-
-| Component | Technology |
-|---|---|
-| **Framework** | Electron 35 |
-| **Database** | SQLite (better-sqlite3) with WAL mode |
-| **Search** | Fuse.js (fuzzy matching) |
-| **Encryption** | AES-256-GCM (Node.js crypto) |
-| **Styling** | Vanilla CSS with CSS Variables |
-| **Font** | Inter (Google Fonts) |
-
----
-
-## 📊 Performance
-
-| Metric | Value |
-|---|---|
-| **RAM (idle in tray)** | ~50 MB |
-| **RAM (window open)** | ~130 MB |
-| **Startup time** | < 2 seconds |
-| **Window appear time** | < 200ms |
-| **Portable .exe size** | ~78 MB |
-| **Source code** | ~60 KB (6 files) |
-
----
-
-## 💾 Data Storage
-
-- **Location:** `%AppData%/quickvault/quickvault.db`
-- **Format:** SQLite database
-- **Backup:** Copy the `.db` file
-- **Migration:** Old JSON data auto-migrated on first run
+- **SQLite + FTS5** — Full-text search with automatic triggers, no external search library needed
+- **Sandboxed renderer** — `contextIsolation: true`, `sandbox: true`, no `require()` in renderer
+- **IPC-only communication** — All data flows through validated IPC channels with rate limiting
+- **Schema versioning** — Database migrations run automatically on startup
+- **Single instance lock** — Only one QuickVault can run at a time
 
 ---
 
 ## 🔒 Security
 
-- **Context Isolation** — renderer cannot access Node.js APIs directly
-- **No `nodeIntegration`** — follows Electron security best practices
-- **AES-256-GCM** — military-grade encryption for sensitive notes
-- **Password never stored** — if lost, encrypted notes are unrecoverable
-- **URL validation** — only `http://` and `https://` URLs are opened externally
+- **Content Security Policy (CSP)** enforced on all pages
+- **Sandboxed renderer** — no Node.js access in the frontend
+- **Input validation** on all IPC channels (preload + main process)
+- **IPC rate limiting** — 60 calls/sec per channel
+- **AES-256-GCM encryption** with PBKDF2 key derivation (100K iterations) for notes
+- **Navigation blocking** — renderer cannot navigate to external URLs
+- **Permission denial** — camera, mic, geolocation requests are all blocked
 
 ---
 
-## 🗺️ Roadmap
+## 📦 Tech Stack
 
-- [ ] Customizable global hotkey
-- [ ] Browser extension (Chrome/Edge)
-- [ ] Clipboard watcher (auto-detect copied URLs)
-- [ ] Favicon for links
-- [ ] Import browser bookmarks
-- [ ] Cloud sync (opt-in)
-- [ ] Mobile companion (PWA)
+| Component | Technology |
+|---|---|
+| Framework | [Electron](https://www.electronjs.org/) v35 |
+| Database | [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) with FTS5 |
+| Search | SQLite FTS5 (full-text search) |
+| Encryption | Node.js `crypto` — AES-256-GCM |
+| Build | [electron-builder](https://www.electron.build/) |
+| IDs | [uuid](https://github.com/uuidjs/uuid) v4 |
+
+---
+
+## 🗂️ Data Storage
+
+Your data is stored locally — nothing is sent to any server.
+
+| Item | Location |
+|---|---|
+| Database | `%APPDATA%/quickvault/quickvault.db` (Windows) |
+| Settings | Stored in the same SQLite database |
+| Backups | `quickvault.db.bak` — auto-created on each launch |
 
 ---
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'feat: add my feature'`
+4. Push to the branch: `git push origin feature/my-feature`
 5. Open a Pull Request
 
 ---
@@ -221,5 +182,6 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 ---
 
 <p align="center">
-  Built with ❤️ using Electron • SQLite • Fuse.js
+  Built with ☕ and Electron<br/>
+  <strong>QuickVault</strong> — Your desktop command palette for bookmarks and notes
 </p>

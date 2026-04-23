@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuickVault</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,26 +20,26 @@
         <span class="app-title">QuickVault</span>
       </div>
       <div class="header-right">
-        <button class="header-btn" id="dashboardBtn" title="Dashboard">
+        <button class="header-btn" id="dashboardBtn" title="Dashboard" aria-label="Toggle dashboard">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         </button>
-        <button class="header-btn" id="exportBtn" title="Export">
+        <button class="header-btn" id="exportBtn" title="Export" aria-label="Export data">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </button>
-        <button class="header-btn" id="viewModeBtn" title="Compact/Expanded">
+        <button class="header-btn" id="viewModeBtn" title="Compact/Expanded" aria-label="Toggle view mode">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </button>
-        <button class="header-btn" id="themeBtn" title="Toggle theme">
+        <button class="header-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
         <span class="item-count" id="itemCount">0</span>
-        <button class="close-btn" id="closeBtn" title="Hide (Esc)">
+        <button class="close-btn" id="closeBtn" title="Hide (Esc)" aria-label="Hide window">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Input Bar (F3: multi-line textarea) -->
+    <!-- Input Bar -->
     <div class="input-section">
       <div class="input-wrapper" id="inputWrapper">
         <div class="input-icon" id="inputIcon">
@@ -62,6 +59,12 @@
     <div class="content-area" id="contentArea">
       <div class="items-view" id="itemsView">
         <div class="items-container" id="itemsContainer">
+          <!-- Loading Skeleton -->
+          <div class="loading-skeleton hidden" id="loadingSkeleton">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
           <div class="empty-state" id="emptyState">
             <div class="empty-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
             <p class="empty-text">No items yet</p>
@@ -75,16 +78,22 @@
       </div>
     </div>
 
-    <!-- Undo Toast (F2) -->
+    <!-- Undo Toast -->
     <div class="undo-toast hidden" id="undoToast">
       <span>Item deleted</span>
-      <button class="undo-btn" id="undoBtn">Undo</button>
+      <button class="undo-btn" id="undoBtn" aria-label="Undo delete">Undo</button>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="error-toast hidden" id="errorToast">
+      <span class="error-toast-msg">An error occurred</span>
+      <button class="error-toast-dismiss" id="errorDismiss" aria-label="Dismiss error">✕</button>
     </div>
 
     <!-- Export Modal -->
     <div class="modal-overlay hidden" id="exportModal">
       <div class="modal">
-        <div class="modal-header"><h3>Export Data</h3><button class="close-btn" id="closeExportModal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+        <div class="modal-header"><h3>Export Data</h3><button class="close-btn" id="closeExportModal" aria-label="Close export modal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
         <div class="modal-body">
           <button class="export-option" data-format="markdown"><span class="export-icon">📄</span><span class="export-label">Markdown</span><span class="export-ext">.md</span></button>
           <button class="export-option" data-format="json"><span class="export-icon">{ }</span><span class="export-label">JSON</span><span class="export-ext">.json</span></button>
@@ -96,7 +105,7 @@
     <!-- Password Modal -->
     <div class="modal-overlay hidden" id="passwordModal">
       <div class="modal">
-        <div class="modal-header"><h3 id="passwordModalTitle">Encrypt Note</h3><button class="close-btn" id="closePasswordModal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+        <div class="modal-header"><h3 id="passwordModalTitle">Encrypt Note</h3><button class="close-btn" id="closePasswordModal" aria-label="Close password modal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
         <div class="modal-body">
           <input type="password" id="passwordInput" class="modal-input" placeholder="Enter password..." autocomplete="off"/>
           <p class="modal-hint" id="passwordHint">This password is NOT stored. Remember it!</p>
@@ -105,10 +114,10 @@
       </div>
     </div>
 
-    <!-- Edit Modal (F1) -->
+    <!-- Edit Modal -->
     <div class="modal-overlay hidden" id="editModal">
       <div class="modal modal-wide">
-        <div class="modal-header"><h3>Edit Item</h3><button class="close-btn" id="closeEditModal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+        <div class="modal-header"><h3>Edit Item</h3><button class="close-btn" id="closeEditModal" aria-label="Close edit modal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
         <div class="modal-body">
           <label class="modal-label">Title</label>
           <input type="text" id="editTitle" class="modal-input" autocomplete="off"/>
