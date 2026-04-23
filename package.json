@@ -18,8 +18,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/blowmuffin/quickvault.git"
   },
+  "bugs": {
+    "url": "https://github.com/blowmuffin/quickvault/issues"
+  },
+  "homepage": "https://github.com/blowmuffin/quickvault-app#readme",
   "build": {
     "appId": "com.quickvault.app",
     "productName": "QuickVault",

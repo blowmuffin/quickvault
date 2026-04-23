@@ -16,6 +16,20 @@
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform" />
 </p>
 
+<p align="center">
+  <img src="assets/screenshot-dark.png" alt="QuickVault Screenshot" width="600" />
+</p>
+
+> **📢 Looking to just download and use QuickVault?** Head over to the user guide repo: [**QuickVault App**](https://github.com/blowmuffin/quickvault-app)
+
+---
+
+## 🧑‍💻 Developer Documentation
+
+This repository contains the **source code** for QuickVault. It is intended for developers who want to understand, build, modify, or contribute to the project.
+
+For the end-user download & usage guide, see [quickvault-app](https://github.com/blowmuffin/quickvault-app).
+
 ---
 
 ## ✨ Features
@@ -36,22 +50,16 @@
 
 ---
 
-## 📸 Quick Look
-
-1. **Press `Ctrl+Shift+Space`** — the overlay appears
-2. **Paste a link** — it's saved instantly with the page title auto-fetched
-3. **Type a note** — press Enter to save, use `#tags` to organize
-4. **Search** — just start typing to find anything
-5. **Press `Esc`** — the overlay hides, your workflow continues
-
----
-
-## 🚀 Getting Started
+## 🚀 Getting Started (Development)
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18 or later
-- [Git](https://git-scm.com/)
+| Tool | Version | Notes |
+|------|---------|-------|
+| [Node.js](https://nodejs.org/) | v18+ | LTS recommended |
+| [Git](https://git-scm.com/) | Latest | — |
+| Python | 3.x | Required by `node-gyp` |
+| C++ Build Tools | — | Windows: VS Build Tools 2019+, macOS: `xcode-select --install`, Linux: `build-essential` |
 
 ### Install & Run
 
@@ -63,7 +71,10 @@ cd quickvault
 # Install dependencies
 npm install
 
-# Run in development mode
+# Run in development mode (with DevTools)
+npm run dev
+
+# Run in production mode
 npm start
 ```
 
@@ -87,19 +98,6 @@ The portable `.exe` (Windows) will be at `dist/QuickVault-Portable.exe`.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| `Ctrl+Shift+Space` | Toggle QuickVault overlay |
-| `Enter` | Save new item / Open selected link |
-| `Shift+Enter` | New line in input |
-| `Esc` | Hide overlay / Close modal |
-| `↑` `↓` | Navigate items |
-| `Delete` | Delete selected item |
-
----
-
 ## 🏗️ Architecture
 
 ```
@@ -115,16 +113,64 @@ quickvault/
 ├── assets/
 │   └── icon.png         # App icon
 ├── package.json
+├── CONTRIBUTING.md      # Contribution guide
+├── SECURITY.md          # Security policy
 └── LICENSE
+```
+
+### Process Model
+
+```
+┌──────────────────────────────────────────┐
+│            Main Process (main.js)        │
+│  ┌──────────┐ ┌────────┐ ┌───────────┐  │
+│  │  Tray    │ │ Hotkey │ │   IPC     │  │
+│  │  Manager │ │ Ctrl+  │ │  Handlers │  │
+│  │          │ │ Shift+ │ │  (rate-   │  │
+│  │          │ │ Space  │ │  limited) │  │
+│  └──────────┘ └────────┘ └─────┬─────┘  │
+│                                │         │
+│  ┌─────────────────────────────┴──────┐  │
+│  │  database.js                       │  │
+│  │  SQLite + FTS5 + AES-256-GCM      │  │
+│  │  Schema Versioning + Auto-Backup   │  │
+│  └────────────────────────────────────┘  │
+└─────────────────┬────────────────────────┘
+                  │ IPC (validated channels)
+┌─────────────────┴────────────────────────┐
+│       Renderer Process (sandboxed)       │
+│  contextIsolation: true  sandbox: true   │
+│  ┌──────────┐ ┌────────┐ ┌───────────┐  │
+│  │ preload  │ │ app.js │ │styles.css │  │
+│  │ (bridge) │ │ (UI)   │ │ (themes)  │  │
+│  └──────────┘ └────────┘ └───────────┘  │
+└──────────────────────────────────────────┘
 ```
 
 ### Key Design Decisions
 
-- **SQLite + FTS5** — Full-text search with automatic triggers, no external search library needed
-- **Sandboxed renderer** — `contextIsolation: true`, `sandbox: true`, no `require()` in renderer
-- **IPC-only communication** — All data flows through validated IPC channels with rate limiting
-- **Schema versioning** — Database migrations run automatically on startup
-- **Single instance lock** — Only one QuickVault can run at a time
+| Decision | Rationale |
+|----------|-----------|
+| **SQLite FTS5 over Fuse.js** | Server-side search is faster and doesn't load all data into renderer memory |
+| **Event delegation** | Single click listener on `itemsList` prevents memory leaks from per-card listeners |
+| **Debounced actions** | Prevents duplicate operations from rapid double-clicks |
+| **Full-object undo** | Stores the complete deleted item, restores with original ID |
+| **Schema versioning** | `user_version` pragma tracks DB version; migrations run on startup |
+| **IPC rate limiting** | 60 calls/sec per channel prevents renderer from flooding main process |
+| **Sandbox + CSP** | Defense-in-depth: no Node.js in renderer, strict content security policy |
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+Shift+Space` | Toggle QuickVault overlay |
+| `Enter` | Save new item / Open selected link |
+| `Shift+Enter` | New line in input |
+| `Esc` | Hide overlay / Close modal |
+| `↑` `↓` | Navigate items |
+| `Delete` | Delete selected item |
 
 ---
 
@@ -137,6 +183,8 @@ quickvault/
 - **AES-256-GCM encryption** with PBKDF2 key derivation (100K iterations) for notes
 - **Navigation blocking** — renderer cannot navigate to external URLs
 - **Permission denial** — camera, mic, geolocation requests are all blocked
+
+For full details, see [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -167,10 +215,19 @@ Your data is stored locally — nothing is sent to any server.
 
 ## 🤝 Contributing
 
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for:
+
+- Development setup
+- Code style & conventions
+- Commit message format
+- Pull request process
+
+Quick start:
+
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
+2. Create a feature branch: `git checkout -b feat/my-feature`
 3. Commit your changes: `git commit -m 'feat: add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
+4. Push to the branch: `git push origin feat/my-feature`
 5. Open a Pull Request
 
 ---
